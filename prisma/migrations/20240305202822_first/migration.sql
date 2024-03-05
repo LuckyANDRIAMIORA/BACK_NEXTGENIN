@@ -1,8 +1,21 @@
 -- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "username" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "firstname" TEXT NOT NULL,
+    "mail" TEXT NOT NULL,
+    "facebooklink" TEXT NOT NULL,
+    "role" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Interest" (
     "id" SERIAL NOT NULL,
     "interestname" TEXT NOT NULL,
-    "clubid" INTEGER NOT NULL,
 
     CONSTRAINT "Interest_pkey" PRIMARY KEY ("id")
 );
@@ -14,6 +27,15 @@ CREATE TABLE "Club" (
     "clubdescription" TEXT NOT NULL,
 
     CONSTRAINT "Club_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "clubinterest" (
+    "id" SERIAL NOT NULL,
+    "clubId" INTEGER NOT NULL,
+    "interestId" INTEGER NOT NULL,
+
+    CONSTRAINT "clubinterest_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -64,10 +86,16 @@ CREATE TABLE "Event" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Interest_interestname_key" ON "Interest"("interestname");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Club_clubname_key" ON "Club"("clubname");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "clubinterest_clubId_interestId_key" ON "clubinterest"("clubId", "interestId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Userclub_userId_clubId_key" ON "Userclub"("userId", "clubId");
@@ -82,7 +110,10 @@ CREATE UNIQUE INDEX "Forum_forumname_key" ON "Forum"("forumname");
 CREATE UNIQUE INDEX "Event_eventname_key" ON "Event"("eventname");
 
 -- AddForeignKey
-ALTER TABLE "Interest" ADD CONSTRAINT "Interest_clubid_fkey" FOREIGN KEY ("clubid") REFERENCES "Club"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "clubinterest" ADD CONSTRAINT "clubinterest_clubId_fkey" FOREIGN KEY ("clubId") REFERENCES "Club"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "clubinterest" ADD CONSTRAINT "clubinterest_interestId_fkey" FOREIGN KEY ("interestId") REFERENCES "Interest"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Userclub" ADD CONSTRAINT "Userclub_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
