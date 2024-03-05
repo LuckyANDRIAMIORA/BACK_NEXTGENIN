@@ -1,5 +1,4 @@
 const {PrismaClient} = require('@prisma/client');
-const { post } = require('../../app');
 const prisma = new PrismaClient()
 
 let getForums = async () =>{
