@@ -12,3 +12,76 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  name String
+  firstname String
+  mail String
+  facebooklink String
+  role String
+  password String
+  interests UserInterest []
+  messages Message []
+  clubs Userclub[]
+}
+
+model Interest{
+  id Int @id @default(autoincrement())
+  interestname String @unique
+  user UserInterest[]
+  club Club @relation (fields: [clubid], references: [id]) 
+  clubid   Int
+}
+
+model Club{
+  id Int @id @default(autoincrement())
+  clubname String @unique
+  clubdescription String
+  users Userclub[]
+  event Event []
+  interest Interest[]
+}
+
+model Userclub{
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  club Club @relation(fields: [clubId], references: [id])
+  clubId Int
+  @@unique([userId, clubId])
+}
+
+model UserInterest{
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  interest Interest @relation(fields: [interestId], references: [id])
+  interestId Int
+  @@unique([userId, interestId])
+}
+
+model Forum {
+  id Int @id @default(autoincrement())
+  forumname String @unique
+  forumdescription String
+  message Message[]
+}
+
+model Message{
+  id Int @id @default(autoincrement())
+  content String
+  user User @relation (fields: [userid], references: [id])
+  userid  Int 
+  forum Forum @relation (fields: [forumid], references: [id])
+  forumid  Int
+}
+
+model Event{
+  id Int @id @default(autoincrement())
+  eventname String @unique
+  eventdescription String
+  club Club @relation (fields: [clubid], references: [id])
+  clubid Int
+}
