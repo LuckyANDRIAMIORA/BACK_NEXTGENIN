@@ -3,7 +3,10 @@ const prisma = new PrismaClient()
 
 let getUserInterests = async () =>{
     try {
-        return await prisma.UserInterest.findMany();
+        return await prisma.UserInterest.findMany({include:{
+            user:true,
+            
+        }});
         prisma.$disconnect()
     } catch (error) {
         prisma.$disconnect()

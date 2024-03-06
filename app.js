@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-//const cors = require('cors')
+const cors = require('cors')
 
 var usersRouter = require('./routes/users')
 var forumsRouter = require('./routes/forum')
@@ -15,7 +15,7 @@ var {authenticateToken} = require('./middleware/middleware')
 
 var app = express();
 
-//app.use(cors());
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());

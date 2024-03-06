@@ -25,7 +25,7 @@ router.get('/messages', async function(req, res, next) {
 router.get('/messages/:id', async (req, res, next) => {
   const messageId = req.params.id;
   try {
-    const data = await messageQuery.getOneMessage(messageId);
+    const data = await messageQuery.getOneMessage(parseInt(messageId));
     res.json(data);  
   } catch (error) {
     res.status(500).json({ message: error.message });
