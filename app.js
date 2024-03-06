@@ -3,8 +3,9 @@ var path = require('path');
 var logger = require('morgan');
 //const cors = require('cors')
 
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users')
 var forumsRouter = require('./routes/forum')
+var messagesRouter = require('./routes/message')
 
 var app = express();
 
@@ -20,9 +21,9 @@ app.use((req, res, next)=>{
     next()
 })
 
-app.use(usersRouter);
+app.use(usersRouter)
 app.use(forumsRouter)
-
+app.use(messagesRouter)
     
 app.use((err, req, res, next)=>{
     res.status(500).send(err.message)
