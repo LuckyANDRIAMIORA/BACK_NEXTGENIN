@@ -3,7 +3,7 @@ const prisma = new PrismaClient()
 
 let getClubInterests = async () =>{
     try {
-        return await prisma.clubinterest.findMany();
+        return await prisma.Clubinterest.findMany()
         prisma.$disconnect()
     } catch (error) {
         prisma.$disconnect()
@@ -13,7 +13,7 @@ let getClubInterests = async () =>{
 
 let createClubinterest = async (clubinterest) => { //et ca aussi est une fonction promise
     try {
-        await prisma.clubinterest.create({ // ce sont des fonctions promises
+        await prisma.Clubinterest.create({ // ce sont des fonctions promises
           data:{
             interest: {
                 connect: { id: clubinterest.interestId }
