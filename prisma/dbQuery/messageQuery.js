@@ -1,9 +1,9 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient()
 
-let getForums = async () =>{
+let getMessages = async () =>{
     try {
-        return await prisma.Forum.findMany();
+        return await prisma.Message.findMany();
         prisma.$disconnect()
     } catch (error) {
         prisma.$disconnect()
@@ -11,12 +11,17 @@ let getForums = async () =>{
     }
 }
 
-let createForum = async (forum) => { //et ca aussi est une fonction promise
+let createMessage = async (message) => { //et ca aussi est une fonction promise
     try {
-        await prisma.Forum.create({ // ce sont des fonctions promises
+        await prisma.Message.create({ // ce sont des fonctions promises
           data:{
-            forumname : forum.forumname,
-            forumdescription : forum.forumdescription
+            content : message.content,
+            user: {
+                connect: { id: message.userid }
+            },
+            forum : {
+                connect : { id : message.forumid}
+            }
         }})
         prisma.$disconnect()     
     } catch (error) {
@@ -25,16 +30,21 @@ let createForum = async (forum) => { //et ca aussi est une fonction promise
     }
 }
 
-let updateForum = async (forum, id) => {
+let updateMessage = async (message, id) => {
     try {
-        return await prisma.Forum.update({
+        return await prisma.Message.update({
           where: {
             id: id,
           },
           data: 
           {
-            forumname : forum.forumname,
-            forumdescription : forum.forumdescription
+            content : message.content,
+            user: {
+                connect: { id: message.userid }
+            },
+            forum : {
+                connect : { id : message.forumid}
+            }
           },
         });
         prisma.$disconnect() 
@@ -44,26 +54,26 @@ let updateForum = async (forum, id) => {
       }
   }
   
-  let deleteForum = async(res, id) => {
+  let deleteMessage = async(res, id) => {
     try {
-      const existingForum = await prisma.Forum.findUnique({
+      const existingMessage = await prisma.Message.findUnique({
         where: {
           id: id,
         },
       })
   
-      if (!existingForum) {
-        res.status(500).json({message: "Forum not found" })
+      if (!existingMessage) {
+        res.status(500).json({message: "Message not found" })
         res.end()
       }
   
-      await prisma.Forum.delete({
+      await prisma.Message.delete({
         where: {
           id: id,
         },
       })
       prisma.$disconnect()
-      res.status(200).json({message: "Forum deleted" })
+      res.status(200).json({message: "Message deleted" })
       res.end()
     } catch (error) {
       prisma.$disconnect()                  
@@ -71,9 +81,9 @@ let updateForum = async (forum, id) => {
     }
   }
 
-  let getOneForum = async (id)=>{
+  let getOneMessage = async (id)=>{
     try {
-        return await prisma.Forum.findUnique({
+        return await prisma.Message.findUnique({
           where: {
             id: id,
           },
@@ -85,4 +95,4 @@ let updateForum = async (forum, id) => {
       }
   }
 
-module.exports={getForums,createForum,updateForum,deleteForum,getOneForum}
+module.exports={getMessages,createMessage,updateMessage,deleteMessage,getOneMessage}

@@ -31,8 +31,7 @@ model Interest{
   id Int @id @default(autoincrement())
   interestname String @unique
   user UserInterest[]
-  club Club @relation (fields: [clubid], references: [id]) 
-  clubid   Int
+  club clubinterest []
 }
 
 model Club{
@@ -41,7 +40,16 @@ model Club{
   clubdescription String
   users Userclub[]
   event Event []
-  interest Interest[]
+  interest clubinterest[]
+}
+
+model clubinterest{
+  id Int @id @default(autoincrement())
+  club Club @relation(fields: [clubId], references: [id])
+  clubId Int
+  interest Interest @relation(fields: [interestId], references: [id])
+  interestId Int
+  @@unique([clubId, interestId])
 }
 
 model Userclub{

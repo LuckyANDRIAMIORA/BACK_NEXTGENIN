@@ -1,9 +1,9 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient()
 
-let getForums = async () =>{
+let getInterests = async () =>{
     try {
-        return await prisma.Forum.findMany();
+        return await prisma.Interest.findMany({});
         prisma.$disconnect()
     } catch (error) {
         prisma.$disconnect()
@@ -11,12 +11,11 @@ let getForums = async () =>{
     }
 }
 
-let createForum = async (forum) => { //et ca aussi est une fonction promise
+let createInterest = async (interest) => { //et ca aussi est une fonction promise
     try {
-        await prisma.Forum.create({ // ce sont des fonctions promises
+        await prisma.Interest.create({ // ce sont des fonctions promises
           data:{
-            forumname : forum.forumname,
-            forumdescription : forum.forumdescription
+            interestname : interest.interestname
         }})
         prisma.$disconnect()     
     } catch (error) {
@@ -25,16 +24,15 @@ let createForum = async (forum) => { //et ca aussi est une fonction promise
     }
 }
 
-let updateForum = async (forum, id) => {
+let updateInterest = async (interest, id) => {
     try {
-        return await prisma.Forum.update({
+        return await prisma.Interest.update({
           where: {
             id: id,
           },
           data: 
           {
-            forumname : forum.forumname,
-            forumdescription : forum.forumdescription
+            interestname : interest.interestname
           },
         });
         prisma.$disconnect() 
@@ -44,20 +42,20 @@ let updateForum = async (forum, id) => {
       }
   }
   
-  let deleteForum = async(res, id) => {
+  let deleteInterest = async(res, id) => {
     try {
-      const existingForum = await prisma.Forum.findUnique({
+      const existingInterest = await prisma.Interest.findUnique({
         where: {
           id: id,
         },
       })
   
-      if (!existingForum) {
+      if (!existingInterest) {
         res.status(500).json({message: "Forum not found" })
         res.end()
       }
   
-      await prisma.Forum.delete({
+      await prisma.Interest.delete({
         where: {
           id: id,
         },
@@ -71,9 +69,9 @@ let updateForum = async (forum, id) => {
     }
   }
 
-  let getOneForum = async (id)=>{
+  let getOneInterest = async (id)=>{
     try {
-        return await prisma.Forum.findUnique({
+        return await prisma.Interest.findUnique({
           where: {
             id: id,
           },
@@ -85,4 +83,4 @@ let updateForum = async (forum, id) => {
       }
   }
 
-module.exports={getForums,createForum,updateForum,deleteForum,getOneForum}
+module.exports={getInterests,createInterest,updateInterest,deleteInterest,getOneInterest}
