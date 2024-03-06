@@ -15,7 +15,7 @@ router.post('/clubinterests/add', function(req, res, next) {
 
 router.get('/clubinterests', async function(req, res, next) {
   try {
-    const data = await clubinterest.getClubInterests()
+    const data = await clubinterestQuery.getClubInterests()
     res.json(data) 
   } catch (error) {
     res.status(500).json({ message: error.message })

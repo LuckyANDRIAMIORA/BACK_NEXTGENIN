@@ -22,6 +22,16 @@ router.get('/clubs', async function(req, res, next) {
   }
 });
 
+router.get('/club/interests/:id', async function(req, res, next) {
+  const id = parseInt(req.params.id)
+  try {
+    const data = await clubQuery.getAllInterestOfClub(id)
+    res.json(data) 
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+});
+
 
 
 

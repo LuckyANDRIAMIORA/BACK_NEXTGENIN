@@ -3,7 +3,7 @@ const prisma = new PrismaClient()
 
 let getClubs = async () =>{
     try {
-        return await prisma.Club.findMany({});
+        return await prisma.Club.findMany();
         prisma.$disconnect()
     } catch (error) {
         prisma.$disconnect()
@@ -88,21 +88,17 @@ let updateClub = async (club, id) => {
   let getAllInterestOfClub = async (id) =>{
     try{
         return await prisma.Club.findUnique({
-                where: {
-                    id: id,
-                },
-                select: {
-                interest: {
-                    select: {
-                        interestname: true
-                    }
-                }
-                }
-            });
+            where: {
+                id: id,
+            },
+            include: {
+              interest: true
+            }
+        });
     }catch(error){
         prisma.$disconnect()                   
         throw new Error(error.message)
     }
   }
 
-module.exports={getClubs,createClub,updateClub,deleteClub,getOneClub}
+module.exports={getClubs,createClub,updateClub,deleteClub,getOneClub,getAllInterestOfClub}
