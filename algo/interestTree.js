@@ -64,7 +64,7 @@ let searchTree = (interest)=>{
             interests.push(element.interest)            
         });
     }
-    console.log(interests)
+    return interests
 }
 
-searchTree("Design")
+module.exports={searchTree} 
