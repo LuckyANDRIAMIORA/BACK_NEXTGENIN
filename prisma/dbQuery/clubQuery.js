@@ -101,4 +101,45 @@ let updateClub = async (club, id) => {
     }
   }
 
-module.exports={getClubs,createClub,updateClub,deleteClub,getOneClub,getAllInterestOfClub}
+  let getAllEventsofClub = async (id) =>{
+    try{
+      return await prisma.Club.findUnique({
+          where: {
+              id: id,
+          },
+          include: {
+            event: true
+          }
+      });
+    }catch(error){
+        prisma.$disconnect()                   
+        throw new Error(error.message)
+    }
+  }
+
+  let getAllMentorsofClub = async (id) =>{
+    try{
+      return await prisma.Club.findUnique({
+          where: {
+              id: id,
+          },
+          include: {
+            mentor: true
+          }
+      });
+    }catch(error){
+        prisma.$disconnect()                   
+        throw new Error(error.message)
+    }
+  }
+
+module.exports={
+  getClubs,
+  createClub,
+  updateClub,
+  deleteClub,
+  getOneClub,
+  getAllInterestOfClub,
+  getAllEventsofClub,
+  getAllMentorsofClub
+}

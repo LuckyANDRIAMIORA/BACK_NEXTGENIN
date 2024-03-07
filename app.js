@@ -11,6 +11,9 @@ var clubRouter = require('./routes/club')
 var clubinterest = require('./routes/clubinterest')
 var userinterest = require('./routes/userinterest')
 var userclub = require('./routes/userclub')
+var eventRouter = require('./routes/event')
+var mentorRouter = require('./routes/mentor')
+var clubmentor = require('./routes/clubmentor')
 var {authenticateToken} = require('./middleware/middleware')
 
 var app = express();
@@ -35,6 +38,9 @@ app.use(clubRouter)
 app.use(clubinterest)
 app.use(userinterest)
 app.use(userclub)
+app.use(eventRouter)
+app.use(mentorRouter)
+app.use(clubmentor)
     
 app.use((err, req, res, next)=>{
     res.status(500).send(err.message)

@@ -149,5 +149,31 @@ let login = async (user) =>{
 }
 
 
+let getUserInterests  = async (id) =>{
+  try{
+    return await prisma.User.findUnique({
+        where: {
+            id: id,
+            role:"utilisateur"
+        },
+        include: {
+          interests: true
+        }
+    });
+  }catch(error){
+      prisma.$disconnect()                   
+      throw new Error(error.message)
+  }
+}
 
-module.exports={createUser,getUsers,getOneUser,updateUser,deleteUser,signup,login}
+
+module.exports={
+  createUser,
+  getUsers,
+  getOneUser,
+  updateUser,
+  deleteUser,
+  signup,
+  login,
+  getUserInterests
+}

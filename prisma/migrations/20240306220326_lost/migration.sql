@@ -14,6 +14,23 @@ ALTER TABLE "clubinterest" DROP CONSTRAINT "clubinterest_interestId_fkey";
 DROP TABLE "clubinterest";
 
 -- CreateTable
+CREATE TABLE "Montor" (
+    "id" SERIAL NOT NULL,
+    "namemontor" TEXT NOT NULL,
+
+    CONSTRAINT "Montor_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Clubmontor" (
+    "id" SERIAL NOT NULL,
+    "clubId" INTEGER NOT NULL,
+    "montorId" INTEGER NOT NULL,
+
+    CONSTRAINT "Clubmontor_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Clubinterest" (
     "id" SERIAL NOT NULL,
     "clubId" INTEGER NOT NULL,
@@ -23,7 +40,19 @@ CREATE TABLE "Clubinterest" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Montor_namemontor_key" ON "Montor"("namemontor");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Clubmontor_clubId_montorId_key" ON "Clubmontor"("clubId", "montorId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Clubinterest_clubId_interestId_key" ON "Clubinterest"("clubId", "interestId");
+
+-- AddForeignKey
+ALTER TABLE "Clubmontor" ADD CONSTRAINT "Clubmontor_clubId_fkey" FOREIGN KEY ("clubId") REFERENCES "Club"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Clubmontor" ADD CONSTRAINT "Clubmontor_montorId_fkey" FOREIGN KEY ("montorId") REFERENCES "Montor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Clubinterest" ADD CONSTRAINT "Clubinterest_clubId_fkey" FOREIGN KEY ("clubId") REFERENCES "Club"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
