@@ -67,4 +67,4 @@ let searchTree = (interest)=>{
     console.log(interests)
 }
 
-searchTree("Design")
+searchTree("Maths")
