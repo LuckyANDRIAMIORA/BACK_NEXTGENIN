@@ -124,7 +124,11 @@ let updateClub = async (club, id) => {
               id: id,
           },
           include: {
-            mentor: true
+            mentor:{
+              include :{
+                mentor:true
+              }
+            }
           }
       });
     }catch(error){

@@ -22,4 +22,14 @@ router.get('/mentors', async function(req, res, next) {
   }
 });
 
+router.get('/mentors/club/:id', async function(req,res,next){
+  const id = parseInt(req.params.id)
+  try {
+    const data = await mentorQuery.getAllClubofMentors(id)
+    res.json(data) 
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
 module.exports = router;
