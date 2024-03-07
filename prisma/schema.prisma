@@ -41,6 +41,23 @@ model Club{
   users Userclub[]
   event Event []
   interest clubinterest[]
+  mentor Clubmentor[]
+}
+
+
+model Mentor{
+  id Int @id @default(autoincrement())
+  namementor String @unique
+  club Clubmentor[]
+}
+
+model Clubmentor{
+  id Int @id @default(autoincrement())
+  club Club @relation(fields: [clubId], references: [id])
+  clubId Int
+  mentor Mentor @relation(fields:[mentorId], references:[id])
+  mentorId Int
+  @@unique([clubId, mentorId])
 }
 
 model clubinterest{
