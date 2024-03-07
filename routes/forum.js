@@ -25,7 +25,7 @@ router.get('/forums', async function(req, res, next) {
 router.get('/forums/:id', async (req, res, next) => {
   const forumId = req.params.id;
   try {
-    const data = await forumQuery.getOneForum(forumId);
+    const data = await forumQuery.getOneForum(parseInt(forumId));
     res.json(data);  
   } catch (error) {
     res.status(500).json({ message: error.message });

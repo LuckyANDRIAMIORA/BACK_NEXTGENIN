@@ -30,12 +30,12 @@ CREATE TABLE "Club" (
 );
 
 -- CreateTable
-CREATE TABLE "clubinterest" (
+CREATE TABLE "Clubinterest" (
     "id" SERIAL NOT NULL,
     "clubId" INTEGER NOT NULL,
     "interestId" INTEGER NOT NULL,
 
-    CONSTRAINT "clubinterest_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Clubinterest_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -95,7 +95,7 @@ CREATE UNIQUE INDEX "Interest_interestname_key" ON "Interest"("interestname");
 CREATE UNIQUE INDEX "Club_clubname_key" ON "Club"("clubname");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "clubinterest_clubId_interestId_key" ON "clubinterest"("clubId", "interestId");
+CREATE UNIQUE INDEX "Clubinterest_clubId_interestId_key" ON "Clubinterest"("clubId", "interestId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Userclub_userId_clubId_key" ON "Userclub"("userId", "clubId");
@@ -110,10 +110,10 @@ CREATE UNIQUE INDEX "Forum_forumname_key" ON "Forum"("forumname");
 CREATE UNIQUE INDEX "Event_eventname_key" ON "Event"("eventname");
 
 -- AddForeignKey
-ALTER TABLE "clubinterest" ADD CONSTRAINT "clubinterest_clubId_fkey" FOREIGN KEY ("clubId") REFERENCES "Club"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Clubinterest" ADD CONSTRAINT "Clubinterest_clubId_fkey" FOREIGN KEY ("clubId") REFERENCES "Club"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "clubinterest" ADD CONSTRAINT "clubinterest_interestId_fkey" FOREIGN KEY ("interestId") REFERENCES "Interest"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Clubinterest" ADD CONSTRAINT "Clubinterest_interestId_fkey" FOREIGN KEY ("interestId") REFERENCES "Interest"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Userclub" ADD CONSTRAINT "Userclub_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

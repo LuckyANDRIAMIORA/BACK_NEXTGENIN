@@ -25,7 +25,7 @@ router.get('/interests', async function(req, res, next) {
 router.get('/interests/:id', async (req, res, next) => {
   const interestId = req.params.id;
   try {
-    const data = await interestQuery.getOneInterest(interestId);
+    const data = await interestQuery.getOneInterest(parseInt(interestId));
     res.json(data);  
   } catch (error) {
     res.status(500).json({ message: error.message });

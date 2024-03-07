@@ -35,9 +35,9 @@ let createUser = async (user) => {
 
 let getOneUser = async (user_name)=>{
   try {
-      return await prisma.Users.findUnique({
+      return await prisma.User.findUnique({
         where: {
-          user_name: user_name,
+          username: user_name,
         },
       });
       prisma.$disconnect() 
