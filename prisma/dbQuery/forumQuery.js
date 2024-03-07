@@ -16,6 +16,7 @@ let createForum = async (forum) => { //et ca aussi est une fonction promise
         await prisma.Forum.create({ // ce sont des fonctions promises
           data:{
             forumname : forum.forumname,
+            subject : forum.subject,
             forumdescription : forum.forumdescription
         }})
         prisma.$disconnect()     
@@ -34,6 +35,7 @@ let updateForum = async (forum, id) => {
           data: 
           {
             forumname : forum.forumname,
+            subject : forum.subject,
             forumdescription : forum.forumdescription
           },
         });
