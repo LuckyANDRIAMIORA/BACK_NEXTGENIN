@@ -24,5 +24,25 @@ let createMentor = async (mentor) => { //et ca aussi est une fonction promise
     }
 }
 
+let getAllClubofMentors = async (id) =>{
+    try{
+      return await prisma.Mentor.findUnique({
+          where: {
+              id: id,
+          },
+          include: {
+            club : {
+                include : {
+                    club:true
+                }
+            }
+          }
+      });
+    }catch(error){
+        prisma.$disconnect()                   
+        throw new Error(error.message)
+    }
+  }
 
-module.exports={getMentors,createMentor}
+
+module.exports={getMentors,createMentor,getAllClubofMentors}
