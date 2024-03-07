@@ -78,6 +78,16 @@ router.delete('/users/delete/:id', async (req, res, next) => {
   }
 })
 
+router.get('/users/interests/:id', async function(req, res, next) {
+  const id = parseInt(req.params.id)
+  try {
+    const data = await userQuery.getUserInterests(id)
+    res.json(data) 
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+});
+
 
 
 
