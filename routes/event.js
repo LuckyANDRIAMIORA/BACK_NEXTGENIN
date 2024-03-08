@@ -22,7 +22,15 @@ router.get('/events', async function(req, res, next) {
   }
 });
 
-
+router.delete('/events/delete/:id', async (req, res, next) => {
+  const eventId = parseInt(req.params.id)
+  try{
+    const data = await eventQuery.deleteEvent(res, eventId)
+    res.json(data)
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
 
 
 module.exports = router;

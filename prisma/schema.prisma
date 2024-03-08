@@ -107,6 +107,7 @@ model Event{
   id Int @id @default(autoincrement())
   eventname String @unique
   eventdescription String
+  eventdate String
   club Club @relation (fields: [clubid], references: [id])
   clubid Int
 }
